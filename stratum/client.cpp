@@ -197,6 +197,11 @@ bool client_validate_user_address(YAAMP_CLIENT *client)
 
 bool client_authorize(YAAMP_CLIENT *client, json_value *json_params)
 {
+	if(g_list_client.Find(client)) {
+		client_send_result(client, "true");
+		return true;
+	}
+
 	if(json_params->u.array.length>1)
 		strncpy(client->password, json_params->u.array.values[1]->u.string.ptr, 1023);
 
